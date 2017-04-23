@@ -65,7 +65,7 @@
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:text="White 1"
-            app:srcCompat="@android:color/holo_green_dark" />
+            app:srcCompat="@android:color/holo_orange_light" />
     </GridLayout>
 
 </android.support.constraint.ConstraintLayout>
