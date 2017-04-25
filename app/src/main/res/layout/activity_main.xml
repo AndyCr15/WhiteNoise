@@ -128,8 +128,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -137,7 +137,7 @@
             android:layout_margin="16dp"
             android:baselineAlignBottom="false"
             android:clickable="true"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorAccent"
             app:elevation="11dp"
             app:fabSize="mini"
             app:srcCompat="@drawable/timer" />
