@@ -2,10 +2,12 @@ package com.androidandyuk.whitenoise;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,37 +31,106 @@ public class MainActivity extends AppCompatActivity {
 
     int isPlaying = 0;
 
+    public void stopAllMedia() {
+
+        Log.i("Stopping all media", "Starting");
+
+        isPlaying = 0;
+
+        if (whiteNoisePlaying) {
+            whiteNoisePlaying = false;
+            mpWhiteNoise.stop();
+            mpWhiteNoise.release();
+        }
+
+        if (rainPlaying) {
+            rainPlaying = false;
+            mpRain.stop();
+            mpRain.release();
+        }
+
+        if (carPlaying) {
+            carPlaying = false;
+            mpCar.stop();
+            mpCar.release();
+        }
+
+        if (dryerPlaying) {
+            dryerPlaying = false;
+            mpDryer.stop();
+            mpDryer.release();
+        }
+
+        if (fanPlaying) {
+            fanPlaying = false;
+            mpFan.stop();
+            mpFan.release();
+        }
+
+        if (trainPlaying) {
+            trainPlaying = false;
+            mpTrain.stop();
+            mpTrain.release();
+        }
+
+        if (wavesPlaying) {
+            wavesPlaying = false;
+            mpWaves.stop();
+            mpWaves.release();
+        }
+
+        if (windPlaying) {
+            windPlaying = false;
+            mpWind.stop();
+            mpWind.release();
+        }
+
+        setContentView(R.layout.activity_main);
+
+    }
+
+    public void startTimer(View view) {
+
+        // set how many minutes the timer will run
+        int minutes = 15;
+        long milliseconds = minutes * 60000;
+
+        // only putting seconds in for testing
+//        int seconds = 10;
+//        long timerMinutes = seconds * 1000;
+//        int minutes = seconds / 60;
+
+
+        Toast.makeText(MainActivity.this, minutes + " minute timer started", Toast.LENGTH_LONG).show();
+
+        new CountDownTimer(milliseconds, 1000) {
+
+            public void onTick(long milliSecondsUntilDone) {
+
+                // timer is counting down, logging every second
+                Log.i("Seconds left : ", String.valueOf(milliSecondsUntilDone / 1000));
+
+            }
+
+            public void onFinish() {
+
+                Log.i("Timer :", "Finished");
+
+                //stop all media playing
+                stopAllMedia();
+                Toast.makeText(MainActivity.this, "Timer finished", Toast.LENGTH_LONG).show();
+            }
+        }.start();
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-//    public void buttonTapped(View view) {
-//
-//        // get the id in a String, of the button that has been tapped
-//        int id = view.getId();
-//
-//        String ourId = "";
-//
-//        ourId = view.getResources().getResourceEntryName(id);
-//
-//        Log.i("button tapped", ourId);
-//
-//        int resourceId = getResources().getIdentifier(ourId, "raw", "com.androidandyuk.whitenoise");
-//
-//
-//        Log.i("mplayer playing is ", " " + isPlaying);
-//        if (isPlaying > 0) {
-//            mplayer.pause();
-//            isPlaying = 0;
-//        } else {
-//            mplayer = MediaPlayer.create(this, resourceId);
-//            mplayer.start();
-//            mplayer.setLooping(true);
-//            isPlaying += 1;
-//        }
-//    }
 
     public void whiteNoiseTapped(View view) {
 
