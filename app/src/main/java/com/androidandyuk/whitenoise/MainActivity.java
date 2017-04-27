@@ -1,17 +1,26 @@
 package com.androidandyuk.whitenoise;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mplayer;
+    AudioManager audioManager;
+
+    private SoundPool mySound;
+    int whiteNoiseId, whiteStreaming, rainId, rainStreaming;
+
+
     MediaPlayer mpWhiteNoise;
     boolean whiteNoisePlaying = false;
     MediaPlayer mpRain;
@@ -129,6 +138,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mySound = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        whiteNoiseId = mySound.load(this, R.raw.whitenoise, 1);
+        rainId = mySound.load(this, R.raw.rain, 1);
+
+
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        SeekBar noiseVolumeControl = (SeekBar) findViewById(R.id.noiseSeekBar);
+
+        noiseVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.i("Seekbar value ", Integer.toString(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 
@@ -138,19 +175,33 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             Log.i("White Noise", "already playing");
-            mpWhiteNoise.pause();
+            mySound.stop(whiteStreaming);
             whiteNoisePlaying = false;
             ((ImageView) view).setImageResource(R.drawable.whitenoise);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("White Noise", "start playing");
-            mpWhiteNoise = MediaPlayer.create(this, R.raw.whitenoise);
-            mpWhiteNoise.start();
-            mpWhiteNoise.setLooping(true);
+            whiteStreaming = mySound.play(whiteNoiseId, 1, 1, 1, -1, 1);
             whiteNoisePlaying = true;
             ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
             isPlaying++;
         }
+
+//        if (whiteNoisePlaying) {
+//            Log.i("White Noise", "already playing");
+//            mpWhiteNoise.pause();
+//            whiteNoisePlaying = false;
+//            ((ImageView) view).setImageResource(R.drawable.whitenoise);
+//            isPlaying--;
+//        } else if (isPlaying < 3) {
+//            Log.i("White Noise", "start playing");
+//            mpWhiteNoise = MediaPlayer.create(this, R.raw.whitenoise);
+//            mpWhiteNoise.start();
+//            mpWhiteNoise.setLooping(true);
+//            whiteNoisePlaying = true;
+//            ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
+//            isPlaying++;
+//        }
     }
 
     public void rainTapped(View view) {
@@ -159,19 +210,33 @@ public class MainActivity extends AppCompatActivity {
 
         if (rainPlaying) {
             Log.i("Rain", "already playing");
-            mpRain.pause();
+            mySound.stop(rainStreaming);
             rainPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.rain);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Rain", "start playing");
-            mpRain = MediaPlayer.create(this, R.raw.rain);
-            mpRain.start();
-            mpRain.setLooping(true);
-            ((ImageView) view).setImageResource(R.drawable.rainpressed);
+            rainStreaming = mySound.play(rainId, 1, 1, 1, -1, 1);
             rainPlaying = true;
+            ((ImageView) view).setImageResource(R.drawable.rainpressed);
             isPlaying++;
         }
+
+//        if (rainPlaying) {
+//            Log.i("Rain", "already playing");
+//            mpRain.pause();
+//            rainPlaying = false;
+//            ((ImageView) view).setImageResource(R.drawable.rain);
+//            isPlaying--;
+//        } else if (isPlaying < 3) {
+//            Log.i("Rain", "start playing");
+//            mpRain = MediaPlayer.create(this, R.raw.rain);
+//            mpRain.start();
+//            mpRain.setLooping(true);
+//            ((ImageView) view).setImageResource(R.drawable.rainpressed);
+//            rainPlaying = true;
+//            isPlaying++;
+//        }
     }
 
     public void fanTapped(View view) {
