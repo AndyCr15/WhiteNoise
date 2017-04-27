@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -42,20 +43,27 @@
             android:id="@+id/noiseSeekBar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:maxHeight="40dip"
+            android:minHeight="40dip"
+            android:visibility="invisible" />
 
         <SeekBar
             android:id="@+id/rainSeekBar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:maxHeight="4dip"
+            android:minHeight="4dip"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -63,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="fanTapped"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/fan" />
 
         <ImageView
@@ -72,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="trainTapped"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/train" />
     </LinearLayout>
 

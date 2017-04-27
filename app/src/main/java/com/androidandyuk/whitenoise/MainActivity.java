@@ -17,9 +17,18 @@ public class MainActivity extends AppCompatActivity {
     AudioManager audioManager;
 
     private SoundPool mySound;
-    int whiteNoiseId, noiseStreaming, rainId, rainStreaming, maxVolume;
+
+    int maxVolume;
+
+    int noiseStreaming = 0;
+    int whiteNoiseId;
     double noiseVol = 1;
+    SeekBar noiseVolumeControl;
+
+    int rainStreaming = 0;
+    int rainId = 0;
     double rainVol = 1;
+    SeekBar rainVolumeControl;
 
 
     boolean whiteNoisePlaying = false;
@@ -133,19 +142,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mySound = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
         whiteNoiseId = mySound.load(this, R.raw.whitenoise, 1);
         rainId = mySound.load(this, R.raw.rain, 1);
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-//        curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-
-        SeekBar noiseVolumeControl = (SeekBar) findViewById(R.id.noiseSeekBar);
+        noiseVolumeControl = (SeekBar) findViewById(R.id.noiseSeekBar);
         noiseVolumeControl.setMax(maxVolume);
         noiseVolumeControl.setProgress(maxVolume);
-        SeekBar rainVolumeControl = (SeekBar) findViewById(R.id.rainSeekBar);
+
+        rainVolumeControl = (SeekBar) findViewById(R.id.rainSeekBar);
         rainVolumeControl.setMax(maxVolume);
         rainVolumeControl.setProgress(maxVolume);
+
 
         noiseVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -169,14 +179,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         rainVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                 double rainVol = (double) progress / (double) maxVolume;
 
                 Log.i("Rain Volume", String.valueOf(progress) + " " + String.valueOf((float) rainVol));
                 mySound.setVolume(rainId, (float) rainVol, (float) rainVol);
-
             }
 
             @Override
@@ -199,38 +208,51 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             Log.i("White Noise", "already playing");
-            mySound.stop(noiseStreaming);
+            mySound.pause(noiseStreaming);
             whiteNoisePlaying = false;
             ((ImageView) view).setImageResource(R.drawable.whitenoise);
             isPlaying--;
+            // make seekbar invisible
+            noiseVolumeControl.setVisibility(View.INVISIBLE);
         } else if (isPlaying < 3) {
             Log.i("White Noise", "start playing");
-            noiseStreaming = mySound.play(whiteNoiseId, (float) noiseVol, (float) noiseVol, 1, -1, 1);
+            if (noiseStreaming == 0) {
+                noiseStreaming = mySound.play(whiteNoiseId, (float) noiseVol, (float) noiseVol, 1, -1, 1);
+            } else {
+                mySound.resume(noiseStreaming);
+            }
             whiteNoisePlaying = true;
             ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
             isPlaying++;
+            noiseVolumeControl.setVisibility(View.VISIBLE);
         }
     }
 
     public void rainTapped(View view) {
 
         Log.i("Rain", "button tapped");
-
         if (rainPlaying) {
             Log.i("Rain", "already playing");
-            //mySound.stop(rainStreaming);
             mySound.pause(rainStreaming);
             rainPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.rain);
             isPlaying--;
+            // make seekbar invisible
+            rainVolumeControl.setVisibility(View.INVISIBLE);
         } else if (isPlaying < 3) {
             Log.i("Rain", "start playing");
-            rainStreaming = mySound.play(rainId, 1, 1, 1, -1, 1);
+            if (rainStreaming == 0) {
+                rainStreaming = mySound.play(rainId, (float) rainVol, (float) rainVol, 1, -1, 1);
+            } else {
+                mySound.resume(rainStreaming);
+            }
             rainPlaying = true;
             ((ImageView) view).setImageResource(R.drawable.rainpressed);
             isPlaying++;
+            rainVolumeControl.setVisibility(View.VISIBLE);
         }
     }
+
 
     public void fanTapped(View view) {
 
