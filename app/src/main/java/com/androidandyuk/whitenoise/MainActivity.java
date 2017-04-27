@@ -17,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
     AudioManager audioManager;
 
     private SoundPool mySound;
-    int whiteNoiseId, whiteStreaming, rainId, rainStreaming;
+    int whiteNoiseId, noiseStreaming, rainId, rainStreaming, maxVolume;
+    double noiseVol = 1;
+    double rainVol = 1;
 
 
     boolean whiteNoisePlaying = false;
@@ -134,23 +136,25 @@ public class MainActivity extends AppCompatActivity {
         whiteNoiseId = mySound.load(this, R.raw.whitenoise, 1);
         rainId = mySound.load(this, R.raw.rain, 1);
 
-
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+//        curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         SeekBar noiseVolumeControl = (SeekBar) findViewById(R.id.noiseSeekBar);
         noiseVolumeControl.setMax(maxVolume);
-        noiseVolumeControl.setProgress(curVolume);
+        noiseVolumeControl.setProgress(maxVolume);
         SeekBar rainVolumeControl = (SeekBar) findViewById(R.id.rainSeekBar);
         rainVolumeControl.setMax(maxVolume);
-        rainVolumeControl.setProgress(curVolume);
+        rainVolumeControl.setProgress(maxVolume);
 
         noiseVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+                double noiseVol = (double) progress / (double) maxVolume;
+
+                Log.i("Noise Volume", String.valueOf(progress) + " " + String.valueOf((float) noiseVol));
+                mySound.setVolume(whiteNoiseId, (float) noiseVol, (float) noiseVol);
             }
 
             @Override
@@ -167,7 +171,12 @@ public class MainActivity extends AppCompatActivity {
         rainVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+
+                double rainVol = (double) progress / (double) maxVolume;
+
+                Log.i("Rain Volume", String.valueOf(progress) + " " + String.valueOf((float) rainVol));
+                mySound.setVolume(rainId, (float) rainVol, (float) rainVol);
+
             }
 
             @Override
@@ -190,13 +199,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             Log.i("White Noise", "already playing");
-            mySound.stop(whiteStreaming);
+            mySound.stop(noiseStreaming);
             whiteNoisePlaying = false;
             ((ImageView) view).setImageResource(R.drawable.whitenoise);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("White Noise", "start playing");
-            whiteStreaming = mySound.play(whiteNoiseId, 1, 1, 1, -1, 1);
+            noiseStreaming = mySound.play(whiteNoiseId, (float) noiseVol, (float) noiseVol, 1, -1, 1);
             whiteNoisePlaying = true;
             ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
             isPlaying++;
@@ -209,7 +218,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (rainPlaying) {
             Log.i("Rain", "already playing");
-            mySound.stop(rainStreaming);
+            //mySound.stop(rainStreaming);
+            mySound.pause(rainStreaming);
             rainPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.rain);
             isPlaying--;
