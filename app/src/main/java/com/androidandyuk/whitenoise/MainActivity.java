@@ -2,7 +2,6 @@ package com.androidandyuk.whitenoise;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,21 +20,13 @@ public class MainActivity extends AppCompatActivity {
     int whiteNoiseId, whiteStreaming, rainId, rainStreaming;
 
 
-    MediaPlayer mpWhiteNoise;
     boolean whiteNoisePlaying = false;
-    MediaPlayer mpRain;
     boolean rainPlaying = false;
-    MediaPlayer mpFan;
     boolean fanPlaying = false;
-    MediaPlayer mpWind;
     boolean windPlaying = false;
-    MediaPlayer mpWaves;
     boolean wavesPlaying = false;
-    MediaPlayer mpTrain;
     boolean trainPlaying = false;
-    MediaPlayer mpDryer;
     boolean dryerPlaying = false;
-    MediaPlayer mpCar;
     boolean carPlaying = false;
 
     int isPlaying = 0;
@@ -48,50 +39,50 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             whiteNoisePlaying = false;
-            mpWhiteNoise.stop();
-            mpWhiteNoise.release();
+//            mpWhiteNoise.stop();
+//            mpWhiteNoise.release();
         }
 
         if (rainPlaying) {
             rainPlaying = false;
-            mpRain.stop();
-            mpRain.release();
+//            mpRain.stop();
+//            mpRain.release();
         }
 
         if (carPlaying) {
             carPlaying = false;
-            mpCar.stop();
-            mpCar.release();
+//            mpCar.stop();
+//            mpCar.release();
         }
 
         if (dryerPlaying) {
             dryerPlaying = false;
-            mpDryer.stop();
-            mpDryer.release();
+//            mpDryer.stop();
+//            mpDryer.release();
         }
 
         if (fanPlaying) {
             fanPlaying = false;
-            mpFan.stop();
-            mpFan.release();
+//            mpFan.stop();
+//            mpFan.release();
         }
 
         if (trainPlaying) {
             trainPlaying = false;
-            mpTrain.stop();
-            mpTrain.release();
+//            mpTrain.stop();
+//            mpTrain.release();
         }
 
         if (wavesPlaying) {
             wavesPlaying = false;
-            mpWaves.stop();
-            mpWaves.release();
+//            mpWaves.stop();
+//            mpWaves.release();
         }
 
         if (windPlaying) {
             windPlaying = false;
-            mpWind.stop();
-            mpWind.release();
+//            mpWind.stop();
+//            mpWind.release();
         }
 
         setContentView(R.layout.activity_main);
@@ -145,15 +136,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         SeekBar noiseVolumeControl = (SeekBar) findViewById(R.id.noiseSeekBar);
+        noiseVolumeControl.setMax(maxVolume);
+        noiseVolumeControl.setProgress(curVolume);
+        SeekBar rainVolumeControl = (SeekBar) findViewById(R.id.rainSeekBar);
+        rainVolumeControl.setMax(maxVolume);
+        rainVolumeControl.setProgress(curVolume);
 
         noiseVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("Seekbar value ", Integer.toString(progress));
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }
 
             @Override
@@ -166,6 +163,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        rainVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
 
 
@@ -186,22 +201,6 @@ public class MainActivity extends AppCompatActivity {
             ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
             isPlaying++;
         }
-
-//        if (whiteNoisePlaying) {
-//            Log.i("White Noise", "already playing");
-//            mpWhiteNoise.pause();
-//            whiteNoisePlaying = false;
-//            ((ImageView) view).setImageResource(R.drawable.whitenoise);
-//            isPlaying--;
-//        } else if (isPlaying < 3) {
-//            Log.i("White Noise", "start playing");
-//            mpWhiteNoise = MediaPlayer.create(this, R.raw.whitenoise);
-//            mpWhiteNoise.start();
-//            mpWhiteNoise.setLooping(true);
-//            whiteNoisePlaying = true;
-//            ((ImageView) view).setImageResource(R.drawable.whitenoisepressed);
-//            isPlaying++;
-//        }
     }
 
     public void rainTapped(View view) {
@@ -221,22 +220,6 @@ public class MainActivity extends AppCompatActivity {
             ((ImageView) view).setImageResource(R.drawable.rainpressed);
             isPlaying++;
         }
-
-//        if (rainPlaying) {
-//            Log.i("Rain", "already playing");
-//            mpRain.pause();
-//            rainPlaying = false;
-//            ((ImageView) view).setImageResource(R.drawable.rain);
-//            isPlaying--;
-//        } else if (isPlaying < 3) {
-//            Log.i("Rain", "start playing");
-//            mpRain = MediaPlayer.create(this, R.raw.rain);
-//            mpRain.start();
-//            mpRain.setLooping(true);
-//            ((ImageView) view).setImageResource(R.drawable.rainpressed);
-//            rainPlaying = true;
-//            isPlaying++;
-//        }
     }
 
     public void fanTapped(View view) {
@@ -245,15 +228,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (fanPlaying) {
             Log.i("Rain", "already playing");
-            mpFan.pause();
+//            mpFan.pause();
             fanPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.fan);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Fan", "start playing");
-            mpFan = MediaPlayer.create(this, R.raw.fan);
-            mpFan.start();
-            mpFan.setLooping(true);
+//            mpFan = MediaPlayer.create(this, R.raw.fan);
+//            mpFan.start();
+//            mpFan.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.fanpressed);
             fanPlaying = true;
             isPlaying++;
@@ -266,15 +249,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (windPlaying) {
             Log.i("Rain", "already playing");
-            mpWind.pause();
+//            mpWind.pause();
             windPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.wind);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Wind", "start playing");
-            mpWind = MediaPlayer.create(this, R.raw.wind);
-            mpWind.start();
-            mpWind.setLooping(true);
+//            mpWind = MediaPlayer.create(this, R.raw.wind);
+//            mpWind.start();
+//            mpWind.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.windpressed);
             windPlaying = true;
             isPlaying++;
@@ -287,15 +270,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (wavesPlaying) {
             Log.i("Rain", "already playing");
-            mpWaves.pause();
+//            mpWaves.pause();
             wavesPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.waves);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Waves", "start playing");
-            mpWaves = MediaPlayer.create(this, R.raw.waves);
-            mpWaves.start();
-            mpWaves.setLooping(true);
+//            mpWaves = MediaPlayer.create(this, R.raw.waves);
+//            mpWaves.start();
+//            mpWaves.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.wavespressed);
             wavesPlaying = true;
             isPlaying++;
@@ -308,15 +291,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (trainPlaying) {
             Log.i("Rain", "already playing");
-            mpTrain.pause();
+//            mpTrain.pause();
             trainPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.train);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Train", "start playing");
-            mpTrain = MediaPlayer.create(this, R.raw.train);
-            mpTrain.start();
-            mpTrain.setLooping(true);
+//            mpTrain = MediaPlayer.create(this, R.raw.train);
+//            mpTrain.start();
+//            mpTrain.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.trainpressed);
             trainPlaying = true;
             isPlaying++;
@@ -329,15 +312,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (dryerPlaying) {
             Log.i("Rain", "already playing");
-            mpDryer.pause();
+//            mpDryer.pause();
             dryerPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.dryer);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Dryer", "start playing");
-            mpDryer = MediaPlayer.create(this, R.raw.dryer);
-            mpDryer.start();
-            mpDryer.setLooping(true);
+//            mpDryer = MediaPlayer.create(this, R.raw.dryer);
+//            mpDryer.start();
+//            mpDryer.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.dryerpressed);
             dryerPlaying = true;
             isPlaying++;
@@ -350,15 +333,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (carPlaying) {
             Log.i("Rain", "already playing");
-            mpCar.pause();
+//            mpCar.pause();
             carPlaying = false;
             ((ImageView) view).setImageResource(R.drawable.car);
             isPlaying--;
         } else if (isPlaying < 3) {
             Log.i("Car", "start playing");
-            mpCar = MediaPlayer.create(this, R.raw.car);
-            mpCar.start();
-            mpCar.setLooping(true);
+//            mpCar = MediaPlayer.create(this, R.raw.car);
+//            mpCar.start();
+//            mpCar.setLooping(true);
             ((ImageView) view).setImageResource(R.drawable.carpressed);
             carPlaying = true;
             isPlaying++;
