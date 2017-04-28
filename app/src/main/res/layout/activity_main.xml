@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/noise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,19 +23,18 @@
             app:srcCompat="@drawable/whitenoise" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/rain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="rainTapped"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/rain" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="30dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -60,13 +59,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/fan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -75,7 +74,7 @@
             app:srcCompat="@drawable/fan" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/train"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -84,4 +83,130 @@
             app:srcCompat="@drawable/train" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/fanSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="40dip"
+            android:minHeight="40dip"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/trainSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="4dip"
+            android:minHeight="4dip"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/waves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="wavesTapped"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/waves" />
+
+        <ImageView
+            android:id="@+id/wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="windTapped"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/wind" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/wavesSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="40dip"
+            android:minHeight="40dip"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/windSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="4dip"
+            android:minHeight="4dip"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/dryer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="dryerTapped"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/dryer" />
+
+        <ImageView
+            android:id="@+id/car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="carTapped"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/car" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/dryerSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="40dip"
+            android:minHeight="40dip"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/carSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxHeight="4dip"
+            android:minHeight="4dip"
+            android:visibility="invisible" />
+    </LinearLayout>
 </LinearLayout>
