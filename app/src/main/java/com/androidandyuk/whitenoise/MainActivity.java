@@ -2,13 +2,17 @@ package com.androidandyuk.whitenoise;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -17,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     AudioManager audioManager;
 
     private SoundPool mySound;
+
+    ListView timerOptionsList;
 
     int maxVolume;
 
@@ -81,57 +87,79 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             whiteNoisePlaying = false;
-//            mpWhiteNoise.stop();
-//            mpWhiteNoise.release();
+            noiseStreaming=0;
+            mySound.stop(whiteNoiseId);
         }
 
         if (rainPlaying) {
             rainPlaying = false;
-//            mpRain.stop();
-//            mpRain.release();
+            rainStreaming=0;
+            mySound.stop(rainId);
         }
 
         if (carPlaying) {
             carPlaying = false;
-//            mpCar.stop();
-//            mpCar.release();
+            carStreaming=0;
+            mySound.stop(carId);
         }
 
         if (dryerPlaying) {
             dryerPlaying = false;
-//            mpDryer.stop();
-//            mpDryer.release();
+            dryerStreaming=0;
+            mySound.stop(dryerId);
         }
 
         if (fanPlaying) {
             fanPlaying = false;
-//            mpFan.stop();
-//            mpFan.release();
+            fanStreaming=0;
+            mySound.stop(fanId);
         }
 
         if (trainPlaying) {
             trainPlaying = false;
-//            mpTrain.stop();
-//            mpTrain.release();
+            trainStreaming=0;
+            mySound.stop(trainId);
         }
 
         if (wavesPlaying) {
             wavesPlaying = false;
-//            mpWaves.stop();
-//            mpWaves.release();
+            wavesStreaming=0;
+            mySound.stop(wavesId);
         }
 
         if (windPlaying) {
             windPlaying = false;
-//            mpWind.stop();
-//            mpWind.release();
+            windStreaming=0;
+            mySound.stop(windId);
         }
-
+        mySound.release();
         setContentView(R.layout.activity_main);
 
     }
 
-    public void startTimer(View view) {
+    public void removeSplashScreen(View view){
+        View splash = findViewById(R.id.splashScreenLayout);
+        splash.setVisibility(View.INVISIBLE);
+        View timer = findViewById(R.id.floatingActionButton);
+        timer.setVisibility(View.VISIBLE);
+    }
+
+    public void timerButton(View view) {
+
+//        timerOptionsList = (ListView)findViewById(timerOptions);
+//        timerOptionsList.setVisibility(View.VISIBLE);
+//
+//        ArrayList<String> times = new ArrayList<>();
+//
+//        times.add("5");
+//        times.add("10");
+//        times.add("20");
+//        times.add("30");
+//        times.add("60");
+//
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.activity_list_item, R.id.timerOptions, times);
+//
+//        timerOptionsList.setAdapter(arrayAdapter);
 
         // set how many minutes the timer will run
         int minutes = 15;
@@ -143,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 //        int minutes = seconds / 60;
 
 
-        Toast.makeText(MainActivity.this, minutes + " minute timer started", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, minutes + " minute sleep timer started", Toast.LENGTH_LONG).show();
 
         new CountDownTimer(milliseconds, 1000) {
 
@@ -161,6 +189,12 @@ public class MainActivity extends AppCompatActivity {
                 //stop all media playing
                 stopAllMedia();
                 Toast.makeText(MainActivity.this, "Timer finished", Toast.LENGTH_LONG).show();
+                //play alarm sound effect
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+                mp.start();
+
+                loadActivity();
             }
         }.start();
 
@@ -172,7 +206,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mySound = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        loadActivity();
+
+    }
+
+    private void loadActivity(){
+        mySound = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
@@ -206,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         windVolumeControl.setMax(maxVolume);
         windVolumeControl.setProgress(maxVolume);
 
-        dryerId = mySound.load(this, R.raw.dryer, 1);
+        dryerId = mySound.load(getApplicationContext(), R.raw.dryer, 1);
         dryerVolumeControl = (SeekBar) findViewById(R.id.dryerSeekBar);
         dryerVolumeControl.setMax(maxVolume);
         dryerVolumeControl.setProgress(maxVolume);
@@ -216,6 +255,11 @@ public class MainActivity extends AppCompatActivity {
         carVolumeControl.setMax(maxVolume);
         carVolumeControl.setProgress(maxVolume);
 
+
+        // **********************************************
+        // Seekbar control
+        // methods below
+        //***********************************************
 
         noiseVolumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -388,6 +432,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // **********************************************
+    // Button tapped
+    // methods below
+    //***********************************************
+
+
     public void whiteNoiseTapped(View view) {
 
         Log.i("White Noise", "button tapped");
@@ -452,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
             isPlaying--;
             // make seekbar invisible
             fanVolumeControl.setVisibility(View.INVISIBLE);
-        } else if (isPlaying < 3) {
+        } else {
             // check not passed maximum tracks allowed
             Log.i("Fan", "start playing");
             // check if the sound item hasn't been set up yet, set it up if it hasn't
@@ -582,9 +632,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void carTapped(View view) {
-        Log.i("Dryer", "button tapped");
+        Log.i("Car", "button tapped");
         if (carPlaying) {
-            Log.i("Dryer", "already playing");
+            Log.i("Car", "already playing");
             mySound.pause(carStreaming);
             carPlaying = false;
             //change image to that showing the button is pressed
@@ -592,9 +642,9 @@ public class MainActivity extends AppCompatActivity {
             isPlaying--;
             // make seekbar invisible
             carVolumeControl.setVisibility(View.INVISIBLE);
-        } else if (isPlaying < 3) {
+        } else {
             // check not passed maximum tracks allowed
-            Log.i("Dryer", "start playing");
+            Log.i("Car", "start playing");
             // check if the sound item hasn't been set up yet, set it up if it hasn't
             if (carStreaming == 0) {
                 carStreaming = mySound.play(carId, (float) carVol, (float) carVol, 1, -1, 1);
