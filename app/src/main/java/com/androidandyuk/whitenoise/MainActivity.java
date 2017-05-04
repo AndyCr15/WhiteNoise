@@ -16,7 +16,17 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+    private static final String TAG = "MainActivity";
+
+    private AdView mAdView;
 
     AudioManager audioManager;
 
@@ -87,49 +97,49 @@ public class MainActivity extends AppCompatActivity {
 
         if (whiteNoisePlaying) {
             whiteNoisePlaying = false;
-            noiseStreaming=0;
+            noiseStreaming = 0;
             mySound.stop(whiteNoiseId);
         }
 
         if (rainPlaying) {
             rainPlaying = false;
-            rainStreaming=0;
+            rainStreaming = 0;
             mySound.stop(rainId);
         }
 
         if (carPlaying) {
             carPlaying = false;
-            carStreaming=0;
+            carStreaming = 0;
             mySound.stop(carId);
         }
 
         if (dryerPlaying) {
             dryerPlaying = false;
-            dryerStreaming=0;
+            dryerStreaming = 0;
             mySound.stop(dryerId);
         }
 
         if (fanPlaying) {
             fanPlaying = false;
-            fanStreaming=0;
+            fanStreaming = 0;
             mySound.stop(fanId);
         }
 
         if (trainPlaying) {
             trainPlaying = false;
-            trainStreaming=0;
+            trainStreaming = 0;
             mySound.stop(trainId);
         }
 
         if (wavesPlaying) {
             wavesPlaying = false;
-            wavesStreaming=0;
+            wavesStreaming = 0;
             mySound.stop(wavesId);
         }
 
         if (windPlaying) {
             windPlaying = false;
-            windStreaming=0;
+            windStreaming = 0;
             mySound.stop(windId);
         }
         mySound.release();
@@ -137,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void removeSplashScreen(View view){
+    public void removeSplashScreen(View view) {
         View splash = findViewById(R.id.splashScreenLayout);
         splash.setVisibility(View.INVISIBLE);
         View timer = findViewById(R.id.floatingActionButton);
@@ -162,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 //        timerOptionsList.setAdapter(arrayAdapter);
 
         // set how many minutes the timer will run
-        int minutes = 15;
+        int minutes = 20;
         long milliseconds = minutes * 60000;
 
         // only putting seconds in for testing
@@ -206,11 +216,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         loadActivity();
 
     }
 
-    private void loadActivity(){
+    private void loadActivity() {
         mySound = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -268,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 double noiseVol = (double) progress / (double) maxVolume;
 
                 Log.i("Noise Volume", String.valueOf(progress) + " " + String.valueOf((float) noiseVol));
-                mySound.setVolume(whiteNoiseId, (float) noiseVol, (float) noiseVol);
+                mySound.setVolume(noiseStreaming, (float) noiseVol, (float) noiseVol);
             }
 
             @Override
@@ -289,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 double rainVol = (double) progress / (double) maxVolume;
 
                 Log.i("Rain Volume", String.valueOf(progress) + " " + String.valueOf((float) rainVol));
-                mySound.setVolume(rainId, (float) rainVol, (float) rainVol);
+                mySound.setVolume(rainStreaming, (float) rainVol, (float) rainVol);
             }
 
             @Override
@@ -310,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                 double fanVol = (double) progress / (double) maxVolume;
 
                 Log.i("Fan Volume", String.valueOf(progress) + " " + String.valueOf((float) fanVol));
-                mySound.setVolume(fanId, (float) fanVol, (float) fanVol);
+                mySound.setVolume(fanStreaming, (float) fanVol, (float) fanVol);
             }
 
             @Override
@@ -331,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 double trainVol = (double) progress / (double) maxVolume;
 
                 Log.i("Train Volume", String.valueOf(progress) + " " + String.valueOf((float) trainVol));
-                mySound.setVolume(trainId, (float) trainVol, (float) trainVol);
+                mySound.setVolume(trainStreaming, (float) trainVol, (float) trainVol);
             }
 
             @Override
@@ -351,8 +367,8 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 double wavesVol = (double) progress / (double) maxVolume;
 
-                Log.i("Waves Volume", String.valueOf(progress) + " " + String.valueOf((float) wavesVol));
-                mySound.setVolume(wavesId, (float) wavesVol, (float) wavesVol);
+                Log.i("Waves Volume", "Id: " + wavesId + " Vol : " + String.valueOf(progress) + " " + String.valueOf((float) wavesVol));
+                mySound.setVolume(wavesStreaming, (float) wavesVol, (float) wavesVol);
             }
 
             @Override
@@ -373,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
                 double windVol = (double) progress / (double) maxVolume;
 
                 Log.i("Wind Volume", String.valueOf(progress) + " " + String.valueOf((float) windVol));
-                mySound.setVolume(windId, (float) windVol, (float) windVol);
+                mySound.setVolume(windStreaming, (float) windVol, (float) windVol);
             }
 
             @Override
@@ -394,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
                 double dryerVol = (double) progress / (double) maxVolume;
 
                 Log.i("Dryer Volume", String.valueOf(progress) + " " + String.valueOf((float) dryerVol));
-                mySound.setVolume(dryerId, (float) dryerVol, (float) dryerVol);
+                mySound.setVolume(dryerStreaming, (float) dryerVol, (float) dryerVol);
             }
 
             @Override
@@ -415,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
                 double carVol = (double) progress / (double) maxVolume;
 
                 Log.i("Car Volume", String.valueOf(progress) + " " + String.valueOf((float) carVol));
-                mySound.setVolume(carId, (float) carVol, (float) carVol);
+                mySound.setVolume(carStreaming, (float) carVol, (float) carVol);
             }
 
             @Override
@@ -558,9 +574,9 @@ public class MainActivity extends AppCompatActivity {
             isPlaying--;
             // make seekbar invisible
             wavesVolumeControl.setVisibility(View.INVISIBLE);
-        } else if (isPlaying < 3) {
+        } else {
             // check not passed maximum tracks allowed
-            Log.i("Waves", "start playing");
+            Log.i("Waves", "start playing, Id :" + wavesId);
             // check if the sound item hasn't been set up yet, set it up if it hasn't
             if (wavesStreaming == 0) {
                 wavesStreaming = mySound.play(wavesId, (float) wavesVol, (float) wavesVol, 1, -1, 1);

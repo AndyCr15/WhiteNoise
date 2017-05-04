@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -9,18 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="8dp">
 
             <ImageView
                 android:id="@+id/noise"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="whiteNoiseTapped"
                 android:scaleType="fitCenter"
@@ -29,36 +33,11 @@
             <ImageView
                 android:id="@+id/rain"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="rainTapped"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/rain" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/noiseSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="40dip"
-                android:minHeight="40dip"
-                android:visibility="invisible" />
-
-            <SeekBar
-                android:id="@+id/rainSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="4dip"
-                android:minHeight="4dip"
-                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +50,7 @@
             <ImageView
                 android:id="@+id/fan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="fanTapped"
                 android:scaleType="fitCenter"
@@ -80,36 +59,11 @@
             <ImageView
                 android:id="@+id/train"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="trainTapped"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/train" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/fanSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="40dip"
-                android:minHeight="40dip"
-                android:visibility="invisible" />
-
-            <SeekBar
-                android:id="@+id/trainSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="4dip"
-                android:minHeight="4dip"
-                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,7 +76,7 @@
             <ImageView
                 android:id="@+id/waves"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="wavesTapped"
                 android:scaleType="fitCenter"
@@ -131,36 +85,11 @@
             <ImageView
                 android:id="@+id/wind"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="windTapped"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/wind" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/wavesSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="40dip"
-                android:minHeight="40dip"
-                android:visibility="invisible" />
-
-            <SeekBar
-                android:id="@+id/windSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxHeight="4dip"
-                android:minHeight="4dip"
-                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,7 +102,7 @@
             <ImageView
                 android:id="@+id/dryer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="dryerTapped"
                 android:scaleType="fitCenter"
@@ -182,7 +111,7 @@
             <ImageView
                 android:id="@+id/car"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="carTapped"
                 android:scaleType="fitCenter"
@@ -190,32 +119,126 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|end"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/noiseSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+
+            <SeekBar
+                android:id="@+id/rainSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/fanSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+
+            <SeekBar
+                android:id="@+id/trainSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/wavesSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+
+            <SeekBar
+                android:id="@+id/windSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <SeekBar
                 android:id="@+id/dryerSeekBar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="8"
-                android:maxHeight="40dip"
-                android:minHeight="40dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
                 android:visibility="invisible" />
 
             <SeekBar
                 android:id="@+id/carSeekBar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="8"
-                android:maxHeight="4dip"
-                android:minHeight="4dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:maxHeight="20dip"
+                android:minHeight="20dip"
                 android:visibility="invisible" />
-
-
         </LinearLayout>
+
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -235,7 +258,7 @@
             android:clickable="true"
             android:onClick="timerButton"
             android:src="@drawable/timer"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:elevation="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -259,7 +282,8 @@
         android:id="@+id/splashScreenLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="removeSplashScreen">
+        android:onClick="removeSplashScreen"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView"
@@ -269,6 +293,15 @@
             android:onClick="removeSplashScreen"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/splashscreen" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
     </FrameLayout>
 
 
