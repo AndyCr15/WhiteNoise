@@ -2,10 +2,7 @@ package com.androidandyuk.whitenoise;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -199,10 +196,12 @@ public class MainActivity extends AppCompatActivity {
                 //stop all media playing
                 stopAllMedia();
                 Toast.makeText(MainActivity.this, "Timer finished", Toast.LENGTH_LONG).show();
+
+
                 //play alarm sound effect
-                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
-                mp.start();
+//                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+//                mp.start();
 
                 loadActivity();
             }
