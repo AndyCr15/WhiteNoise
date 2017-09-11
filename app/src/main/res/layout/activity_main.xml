@@ -3,21 +3,9 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
-    <ListView
-        android:id="@+id/timerOptions"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        android:elevation="24dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-        app:layout_constraintRight_toRightOf="@+id/floatingActionButton"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,6 +29,7 @@
                 android:layout_weight="1"
                 android:onClick="whiteNoiseTapped"
                 android:scaleType="fitCenter"
+                android:tag="whitenoise"
                 app:srcCompat="@drawable/whitenoise" />
 
             <ImageView
@@ -50,6 +39,7 @@
                 android:layout_weight="1"
                 android:onClick="rainTapped"
                 android:scaleType="fitCenter"
+                android:tag="rain"
                 app:srcCompat="@drawable/rain" />
         </LinearLayout>
 
@@ -67,6 +57,7 @@
                 android:layout_weight="1"
                 android:onClick="fanTapped"
                 android:scaleType="fitCenter"
+                android:tag="fan"
                 app:srcCompat="@drawable/fan" />
 
             <ImageView
@@ -76,6 +67,7 @@
                 android:layout_weight="1"
                 android:onClick="trainTapped"
                 android:scaleType="fitCenter"
+                android:tag="train"
                 app:srcCompat="@drawable/train" />
         </LinearLayout>
 
@@ -93,6 +85,7 @@
                 android:layout_weight="1"
                 android:onClick="wavesTapped"
                 android:scaleType="fitCenter"
+                android:tag="waves"
                 app:srcCompat="@drawable/waves" />
 
             <ImageView
@@ -102,6 +95,7 @@
                 android:layout_weight="1"
                 android:onClick="windTapped"
                 android:scaleType="fitCenter"
+                android:tag="wind"
                 app:srcCompat="@drawable/wind" />
         </LinearLayout>
 
@@ -119,6 +113,7 @@
                 android:layout_weight="1"
                 android:onClick="dryerTapped"
                 android:scaleType="fitCenter"
+                android:tag="dryer"
                 app:srcCompat="@drawable/dryer" />
 
             <ImageView
@@ -128,6 +123,7 @@
                 android:layout_weight="1"
                 android:onClick="carTapped"
                 android:scaleType="fitCenter"
+                android:tag="car"
                 app:srcCompat="@drawable/car" />
 
         </LinearLayout>
@@ -289,29 +285,101 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="0dp"
             android:onClick="removeSplashScreen"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/splashscreen" />
 
     </FrameLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+    <ImageView
+        android:id="@+id/shield"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="shieldClicked"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        ads:srcCompat="@drawable/shield" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:onClick="timerButton"
-        android:src="@drawable/timer"
-        android:visibility="visible"
-        ads:fabSize="normal"
-        app:elevation="24dp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/eight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_corners_fab_option"
+            android:elevation="12dp"
+            android:onClick="fabClicked"
+            android:tag="eight"
+            android:text="Eight hours"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/sixty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_corners_fab_option"
+            android:elevation="12dp"
+            android:onClick="fabClicked"
+            android:tag="sixty"
+            android:text="One hour"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/twenty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_corners_fab_option"
+            android:elevation="12dp"
+            android:onClick="fabClicked"
+            android:tag="twenty"
+            android:text="20 mins"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:onClick="timerButtonClicked"
+            android:tag="default"
+            ads:srcCompat="@drawable/timer"
+            app:elevation="12dp"
+            app:fabSize="normal" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>
